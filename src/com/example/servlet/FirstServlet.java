@@ -3,6 +3,7 @@ package com.example.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,16 +36,21 @@ public class FirstServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		
 		HttpSession session = request.getSession();
+		ServletContext context = request.getServletContext();
 		
 		if(userName != "" && userName!=null)
 		{
 			session.setAttribute("UserName", userName);
+			context.setAttribute("UserName", userName);
 			
 		}
 		
 		PrintWriter writer = response.getWriter();
 		writer.println("Hello " + userName);
-		writer.println("Hello "+ (String)session.getAttribute("UserName"));
+		writer.println("\n");
+		writer.println("Hello from the session paramter "+ (String)session.getAttribute("UserName"));
+		writer.println("\n");
+		writer.println("Hello from the context paramter "+ (String)context.getAttribute("UserName"));
 
 	}
 
